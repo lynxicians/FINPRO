@@ -1,4 +1,4 @@
-<form class="form-cover" method="POST" action="{{ route('user-login') }}">
+<form class="form-cover" method="POST" action="{{ route('login-post') }}">
     @csrf
     <div class="form-group">
         <label class="font-weight-bold p-400 p-m-400">E-mail</label>
