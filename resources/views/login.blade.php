@@ -1,3 +1,6 @@
+@extends('layout.layout')
+
+@section('content')
 <form class="form-cover" method="POST" action="{{ route('login-post') }}">
     @csrf
     <div class="form-group">
@@ -29,3 +32,4 @@
     <a href="" class="sign-up text-decoration-none">Sign Up</a>
     <button type="submit" class="w-100 button-login">LOGIN</button>
 </form>
+@endsection
