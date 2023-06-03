@@ -1,4 +1,4 @@
-<form class="form-cover" method="POST" action="{{ route('user-register') }}">
+<form class="form-cover" method="POST" action="{{ route('register-post') }}">
     @csrf
     <div class="form-group">
         <label class="font-weight-bold p-400 p-m-400">Name</label>
@@ -6,6 +6,20 @@
             <input type="text" name="name"
             class="form-control @error('email') is-invalid @enderror"
             placeholder="Enter your name">
+            @error('email')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="font-weight-bold p-400 p-m-400">Student ID</label>
+        <div>
+            <input type="text" name="name"
+            class="form-control @error('email') is-invalid @enderror"
+            placeholder="Enter your student ID">
             @error('email')
             <div class="invalid-feedback">
                 {{ $message }}

@@ -1,4 +1,7 @@
-<form class="form-cover" method="POST" action="{{ route('user-login') }}">
+@extends('layout.layout')
+
+@section('content')
+<form class="form-cover" method="POST" action="{{ route('login-post') }}">
     @csrf
     <div class="form-group">
         <label class="font-weight-bold p-400 p-m-400">E-mail</label>
@@ -29,3 +32,4 @@
     <a href="" class="sign-up text-decoration-none">Sign Up</a>
     <button type="submit" class="w-100 button-login">LOGIN</button>
 </form>
+@endsection

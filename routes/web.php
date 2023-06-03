@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\HomepageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,5 +14,21 @@ use App\Http\Controllers\RegisterController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::group(['middleware' => ['guest']], function()
+{
+    Route::get('/login', [LoginController::class, 'index'])->name("login");
+    Route::post('/login', [LoginController::class, 'authenticate'])->name("login-post");
+
+    Route::get('/register', [RegisterController::class, 'index'])->name("register");
+    Route::post('/register', [RegisterController::class, 'register'])->name("register-post");
+});
+
+Route::group(['middleware' => ['auth']], function()
+{
+    Route::get('/', [HomepageController::class, 'index'])->name("homepage");
+});
+
+
 
 
