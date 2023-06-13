@@ -9,9 +9,9 @@
     <title>Document</title>
 </head>
 <body>
+    @if(Route::currentRouteName() != "login" &&  Route::currentRouteName() != "register")
+        @include('partial.navbar')
+    @endif
     @yield('content')
-    @yield('register')
-    @yield('suggestion')
-    @yield('about')
 </body>
 </html>

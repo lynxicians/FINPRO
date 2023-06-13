@@ -1,14 +1,12 @@
-body{
-    .container{
-        background-image: url(/public/images/register/registerbackground.jpg);
-        background-size: cover;
-        .col-md-4{
-            margin-top: 100px;
-            border-radius: 5px;
-            padding: 20px;
-            background-color: rgb(255, 255, 255, 0.5);
-            backdrop-filter: blur(8px);
-        }
+.container{
+
+    .col-md-4{
+        margin-top: 100px;
+        border-radius: 5px;
+        padding: 20px;
+        background-color: rgb(255, 255, 255, 0.5);
+        backdrop-filter: blur(8px);
     }
 }
+
 
