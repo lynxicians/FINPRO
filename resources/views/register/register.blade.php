@@ -1,14 +1,22 @@
 @extends('layout.layout')
 
-@section('register')
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <main class="form-register">
-                <form class="form-cover" method="POST" action="{{ route('register-post') }}">
-                    @csrf
-                   <h1 class="h3 mb-3 fw-normal text-center">Registration</h1>
+@section('content')
+<style>
+    .background{
+        width: 100vw;
+        height: 100vh;
+        background-image: url('{{ asset('images/login/loginbackground.jpg') }}');
+        background-size: cover;
+    }
+</style>
+<div class="background">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <main class="form-register">
+                    <form class="form-cover" method="POST" action="{{ route('register-post') }}">
+                        @csrf
+                    <h1 class="h3 mb-3 fw-normal text-center">Registration</h1>
                     <div class="form-group">
                         <label class="font-weight-bold p-400 p-m-400">Name</label>
                         <div>
@@ -70,7 +78,7 @@
         </div>
     </div>
   </div>
-
+</div>
 
 
 
