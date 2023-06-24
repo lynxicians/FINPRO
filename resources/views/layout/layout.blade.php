@@ -13,5 +13,6 @@
         @include('partial.navbar')
     @endif
     @yield('content')
+    @yield('ck-editor')
 </body>
 </html>
