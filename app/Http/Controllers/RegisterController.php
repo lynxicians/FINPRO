@@ -27,7 +27,8 @@ class RegisterController extends Controller
         $validatedData['role_id'] = 1;
 
         User::create($validatedData);
-
+        $validatedData['role_id'] = 1;
+        
         session()->flash('success', 'Your account has been created successfully.');
 
         $successMessage = session('success');
