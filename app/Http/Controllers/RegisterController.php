@@ -25,7 +25,8 @@ class RegisterController extends Controller
         $validatedData['password'] = Hash::make($validatedData['password']);
 
         User::create($validatedData);
-
+        $validatedData['role_id'] = 1;
+        
         session()->flash('success', 'Your account has been created successfully.');
 
         $successMessage = session('success');
