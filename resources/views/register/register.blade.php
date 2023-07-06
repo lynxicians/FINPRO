@@ -34,10 +34,10 @@
                     <div class="form-group">
                         <label class="font-weight-bold p-400 p-m-400">Student ID</label>
                         <div>
-                            <input type="text" name="name"
-                            class="form-control @error('email') is-invalid @enderror"
+                            <input type="text" name="student_id"
+                            class="form-control @error('student_id') is-invalid @enderror"
                             placeholder="Enter your student ID">
-                            @error('email')
+                            @error('student_id')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
