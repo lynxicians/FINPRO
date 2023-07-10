@@ -15,25 +15,22 @@ class RegisterController extends Controller
     
     public function register(Request $request): RedirectResponse
     {
-        try {
-            $validatedData = $request->validate([
-                'name' => 'required|max:255',
-                'email' => ['required', 'min: 3', 'max: 255', 'unique:users'],
-                'password' => 'required|min:8|max:255',
-            ]);
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => ['required', 'min: 3', 'max: 255', 'unique:users'],
+            'student_id' => ['required', 'min: 3', 'max: 255', 'unique:users'],
+            'password' => 'required|min:8|max:255',
+        ]);
 
-            $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['role_id'] = 1;
 
-            User::create($validatedData);
+        User::create($validatedData);
+        
+        session()->flash('success', 'Your account has been created successfully.');
 
-            session()->flash('success', 'Your account has been created successfully.');
+        $successMessage = session('success');
 
-            return redirect(route('login'));
-
-        } catch (\Exception $e) {
-            // Handle the exception here...
-            session()->flash('error', 'An error occurred while registering. Please try again later.');
-            return redirect()->back();
-        }
+        return redirect(route('login'))->with('success', $successMessage);
     }
 }

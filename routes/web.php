@@ -29,10 +29,9 @@ Route::group(['middleware' => ['guest']], function()
 
 Route::group(['middleware' => ['auth']], function()
 {
-    
 });
 
-Route::resource('suggestion', PostController::class)->name('suggestion', 'suggestion');
+Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");
 Route::get('/about', [AboutController::class, 'index'])->name("about");
 Route::get('/', [HomepageController::class, 'index'])->name("homepage");
 
