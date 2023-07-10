@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomepageController;
-use App\Http\Controllers\SuggestionController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\AboutController;
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +29,10 @@ Route::group(['middleware' => ['guest']], function()
 
 Route::group(['middleware' => ['auth']], function()
 {
-    Route::get('/', [HomepageController::class, 'index'])->name("homepage");
-    Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");
 });
 
+Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");
 Route::get('/about', [AboutController::class, 'index'])->name("about");
+Route::get('/', [HomepageController::class, 'index'])->name("homepage");
 
 

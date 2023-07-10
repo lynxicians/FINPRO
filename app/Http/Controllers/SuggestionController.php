@@ -9,5 +9,4 @@ class SuggestionController extends Controller
     public function index(){
         return view('suggestion.suggestion');
     }
-    
 }

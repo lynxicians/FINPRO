@@ -50,6 +50,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group p-1">       
+                            <div class="form-group">
+                                <label class="font-weight-bold p-400 p-m-400">Password Confirmation</label>
+                                <div>
+                                    <input type="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" id="login-password">
+                                    @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <button class="w-50 h-25 d-grid gap-2 mx-auto btn btn-lg btn-dark mt-3" type="submit">Login</button>
                         <small class="d-block text-center mt-2">Not registered? <a href="/register">Register</a></small>
                     </form>
