@@ -8,7 +8,7 @@
             <hr>
         </div>
         <div class="col-lg-8">
-            <form method="post" action="/suggestion">
+            <form method="post" action="{{ route('suggestion-post') }}">
                 @csrf
                 <div class="mb-3">
                   <label for="title" class="form-label text-uppercase">Title</label>
@@ -16,11 +16,11 @@
                 </div>
                 <div class="mb-3">
                   <label for="description" class="form-label text-uppercase">Description</label>
-                  <input type="text" class="form-control" id="description">
+                  <input type="text" class="form-control" id="description" name="description">
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label text-uppercase">Content</label>
-                    <textarea class="form-control" id="editor" rows="3"></textarea>
+                    <textarea class="form-control" id="editor" rows="3" name="content"></textarea>
                 </div>
                 <button type="submit" class="btn btn-dark fw-bold">Posting</button>
             </form>
