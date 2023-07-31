@@ -11,12 +11,12 @@
     <title>Document</title>
 </head>
 <body class="@yield('body_class', 'campus-voice')">
-    @if(Route::currentRouteName() != "login" &&  Route::currentRouteName() != "register")
+    @if(Route::currentRouteName() != "login" &&  Route::currentRouteName() != "register" && Route::currentRouteName() != "suggestion.SuggestionManagementSystem")
         @include('partial.navbar')
+        @include('partial.footer')
     @endif
     @yield('content')
     @yield('ck-editor')
-    @include('partial.footer')
     @section('scripts')
         <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
         <!-- Replace with the appropriate URLs for your jQuery and DataTables version -->
