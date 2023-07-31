@@ -1,0 +1,63 @@
+@use "sass:map";
+
+body.campus-voice {
+
+    .footer-cover{
+        padding: 20px;
+        background-color: #e6b7f8;
+    }
+
+    textarea:focus, 
+    textarea.form-control:focus, 
+    input.form-control:focus, 
+    input[type=text]:focus, 
+    input[type=password]:focus, 
+    input[type=email]:focus, 
+    input[type=number]:focus, 
+    [type=text].form-control:focus, 
+    [type=password].form-control:focus, 
+    [type=email].form-control:focus, 
+    [type=tel].form-control:focus, 
+    [contenteditable].form-control:focus {
+      box-shadow: none;
+    }
+
+    a {
+        color: #1f95f5;
+        text-decoration: none;
+    }
+    
+    a:hover {
+        color:#1C86DD; 
+        text-decoration:none; 
+        cursor:pointer;  
+    }
+
+    .whole-wrapper{
+        transition: 0.2s;
+    }
+
+    .voice-container {
+        max-width: 1280px !important;
+        padding-left: 100px;
+        padding-right: 100px;
+        margin: 0 auto;
+    }
+
+    .ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
+        position: fixed;
+        top: 76.61px!important;
+        }
+        
+
+    @media screen and (max-width: 1024px) {
+        .voice-container {
+            max-width: 100%;
+            width: 100%;
+            padding-right: var(--bs-gutter-x, 1.5rem);
+            padding-left: var(--bs-gutter-x, 1.5rem);
+            margin-right: auto;
+            margin-left: auto;
+        }
+    }
+}

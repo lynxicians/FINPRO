@@ -22,9 +22,18 @@ class LoginController extends Controller
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
-            return redirect()->intended(route('homepage'));
+            $user = Auth::user();
+            $roleId = $user->role_id;
+
+            if ($roleId === 2) {
+                return redirect()->intended(route('admin.index'));
+
+            } else {
+                // Handle other roles or show a different view for non-admin users
+                return redirect()->intended(route('homepage'));
+            }
         }
+        
  
         return back()->withInput()->withErrors([
             'password' => 'The provided credentials do not match our records',
