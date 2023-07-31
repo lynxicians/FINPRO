@@ -37,18 +37,16 @@ Route::group(['middleware' => ['auth']], function()
     Route::post('/like', [CommentController::class, 'like'])->name('suggestion.like');
     Route::get('/suggestion-mannagement', [SuggestionController::class, 'getUsersData'])->name('suggestion.data');
     Route::get('/suggestion-edit', [SuggestionController::class, 'suggestionEdit'])->name('suggestion.edit');
-    Route::get('/suggestions', [SuggestionController::class, 'suggestionDelete'])->name('suggestion.delete');
+    Route::get('/suggestion-delete', [SuggestionController::class, 'suggestionDelete'])->name('suggestion.delete');
     Route::get('/SuggestionManagementSystem', [SuggestionController::class, 'SuggestionManagementSystem'])->name('suggestion.SuggestionManagementSystem');
-    
+    Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");
+    Route::post('/suggestion', [SuggestionController::class, 'store'])->name("suggestion-post");
 });
 
 Route::group(['middleware' => ['AdminLogin']], function()
 {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.index');
 });
-
-Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");
-Route::post('/suggestion', [SuggestionController::class, 'store'])->name("suggestion-post");
 Route::get('/about', [AboutController::class, 'index'])->name("about");
 Route::get('/', [HomepageController::class, 'index'])->name("homepage");
 
