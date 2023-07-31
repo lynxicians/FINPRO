@@ -52,58 +52,43 @@
  </div>
  <div class="content-container">
   <hr class="border-2">
-  @foreach ($content as $index => $item)
-  @if ($index % 2 == 0)
-  <a href="{{ route('suggestion.show', ['id' => $item->id]) }}" class="text-dark">
-    <div class="content-wrapper">
-      <div class="circle-profile"></div>
-      <div class="low-desc">
-        <div class="purple w-100">
-          <div class="head">{{ $item->title }}</div>
-        </div>
-        <div class="pink w-100">
-          <div class="body">{!! $item->first_paragraph !!}
-                @if (str_word_count(strip_tags($item->content)) > 100)
-                ...
-                @endif
+  <div class="row g-5">
+    @foreach ($content as $index => $item)
+    <div class="col-4">
+      <div class="content-wrapper">
+        {{-- <div class="circle-profile"></div> --}}
+        <a href="{{ route('suggestion.show', ['id' => $item->id]) }}" class="text-dark">
+          <div class="low-desc">
+            <div class="purple w-100">
+              <div class="head">{{ $item->title }}</div>
+            </div>
+            <div class="pink w-100">
+              <div class="body">{!! $item->first_paragraph !!}
+                    @if (str_word_count(strip_tags($item->content)) > 100)
+                    ...
+                    @endif
+              </div>
+            </div>
+          </a>
+            <div class="pink-bottom">
+              <div class="bottom-wrappers">
+                <form action="{{ route('suggestion.like', ['id' => $item->id]) }}" method="POST">
+                    @csrf
+                      <input type="hidden" value="{{ $item->id }}" name="suggestion_id">
+                    <button type="submit" class="like-button btn">
+                        <i class="bx bx-like"></i> {{ $item->likes_count }}
+                    </button>
+                </form>
+                <a href="{{ route('suggestion.show', ['id' => $item->id]) }}" class="text-dark">
+                  <div class="comment"><i class='bx bx-comment-dots'></i></div>
+                </a>
+                <div class="date">{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d H:i') }}</div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="pink-bottom">
-          <div class="bottom-wrappers">
-            <div class="like"><i class='bx bx-like'></i></div>
-            <div class="comment"><i class='bx bx-comment-dots'></i></div>
-            <div class="date">{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d H:i') }}</div>
-          </div>
-        </div>
       </div>
     </div>
-  </a>
-  @else
-  <a href="{{ route('suggestion.show', ['id' => $item->id]) }}" class="text-dark">
-    <div class="content-wrapper d-flex justify-content-end ms-auto">
-      <div class="low-desc">
-        <div class="purple w-100">
-          <div class="head">{{ $item->title }}</div>
-        </div>
-        <div class="pink w-100">
-          <div class="body">{!! $item->first_paragraph !!}
-                @if (str_word_count(strip_tags($item->content)) > 100)
-                ...
-                @endif
-          </div>
-        </div>
-        <div class="pink-bottom">
-          <div class="bottom-wrappers">
-            <div class="like"><i class='bx bx-like'></i></div>
-            <div class="comment"><i class='bx bx-comment-dots'></i></div>
-            <div class="date">{{ \Carbon\Carbon::parse($item->created_at)->format('Y-m-d H:i') }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="circle-profile"></div>
-    </div>
-  </a>
-  @endif
-@endforeach
+    @endforeach
+  </div>
  </div>
  @endsection

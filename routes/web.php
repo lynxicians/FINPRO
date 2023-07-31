@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\SuggestionController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +32,19 @@ Route::group(['middleware' => ['guest']], function()
 Route::group(['middleware' => ['auth']], function()
 {
     Route::get('/suggestion/detail/{id}', [SuggestionController::class, 'SuggestionShow'])->name('suggestion.show');
-    Route::POST('/comment', [CommentController::class, 'Comment'])->name('comment');
+    Route::get('/suggestion-management', [SuggestionController::class, 'userManagement'])->name('suggestion.management');
+    Route::post('/comment', [CommentController::class, 'Comment'])->name('comment');
+    Route::post('/like', [CommentController::class, 'like'])->name('suggestion.like');
+    Route::get('/suggestion-mannagement', [SuggestionController::class, 'getUsersData'])->name('suggestion.data');
+    Route::get('/suggestion-edit', [SuggestionController::class, 'suggestionEdit'])->name('suggestion.edit');
+    Route::get('/suggestions', [SuggestionController::class, 'suggestionDelete'])->name('suggestion.delete');
+    Route::get('/SuggestionManagementSystem', [SuggestionController::class, 'SuggestionManagementSystem'])->name('suggestion.SuggestionManagementSystem');
+    
+});
+
+Route::group(['middleware' => ['AdminLogin']], function()
+{
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.index');
 });
 
 Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");

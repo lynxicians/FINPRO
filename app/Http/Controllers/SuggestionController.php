@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Suggestion;
 use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class SuggestionController extends Controller
 {
@@ -46,6 +48,40 @@ class SuggestionController extends Controller
             'content' => $content,
             'comments' => $comments,
         ]);
+    }
+
+    public function getUsersData(Request $request)
+    {
+        $users = Auth::user();
+        $sugg = Suggestion::where('user_id', $users->id)->orderBy('created_at', 'desc');
+
+        return DataTables::of($sugg)
+            ->editColumn('action', function ($sugg) {
+                return '<a class="btn button-light-blue-30 custom-edit" href="' . route('suggestion.edit', ['id' => $sugg->id]) . '">Edit</a>'
+                . '<form action="' . route('suggestion.delete', ['id' => $sugg->id]) . '" method="POST" style="display:inline">'
+                . csrf_field()
+                . method_field('DELETE')
+                . '<button type="submit" class="btn button-pink-30 custom-edit">Delete</button>'
+                . '</form>'
+                . '<a class="btn button-purple-90 custom-edit" style="color: black;" href="' . route('suggestion.show', ['id' => $sugg->id]) . '">View</a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+ 
+    public function SuggestionManagementSystem()
+    {
+        return view('suggestion.userManagement');
+    }
+
+    public function suggestionEdit()
+    {
+        return view('suggestion.show');
+    }
+
+    public function suggestionDelete()
+    {
+        return view('suggestion.show');
     }
 }
 

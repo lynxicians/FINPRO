@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Suggestion extends Model
+class Like extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'content', 'user_id'];
+    protected $fillable = ['user_id', 'suggestion_id'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function likesCount()
+    {
+        return $this->likes()->count();
     }
 
     public function likes()

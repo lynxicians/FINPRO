@@ -20,9 +20,6 @@ return new class extends Migration
             // Define foreign key constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('suggestion_id')->references('id')->on('suggestions')->onDelete('cascade');
-
-            // Make sure each user can like a suggestion only once
-            $table->unique(['user_id', 'suggestion_id']);
         });
     }
 
