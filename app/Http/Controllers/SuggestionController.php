@@ -50,6 +50,8 @@ class SuggestionController extends Controller
         ]);
     }
 
+    
+
     public function getUsersData(Request $request)
     {
         $users = Auth::user();
@@ -79,9 +81,13 @@ class SuggestionController extends Controller
         return view('suggestion.show');
     }
 
-    public function suggestionDelete()
+    public function suggestionDelete($id)
     {
-        return view('suggestion.show');
+        $suggestion = Suggestion::find($id); 
+        $suggestion->delete(); 
+
+        return redirect()->route('suggestion.userManagement');
     }
+
 }
 
