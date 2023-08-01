@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function()
     Route::get('/SuggestionManagementSystem', [SuggestionController::class, 'SuggestionManagementSystem'])->name('suggestion.SuggestionManagementSystem');
     Route::get('/suggestion', [SuggestionController::class, 'index'])->name("suggestion");
     Route::post('/suggestion', [SuggestionController::class, 'store'])->name("suggestion-post");
+    Route::post('/userUpdate', [SuggestionController::class, 'UserUpdate'])->name("userUpdate");
 });
 
 Route::group(['middleware' => ['AdminLogin']], function()
