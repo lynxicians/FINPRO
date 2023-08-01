@@ -29,12 +29,24 @@
                 color: #000000;
             }
         }
+      
     }
+    .button-suggestionDone{
+        a{
+            background-color:#e6b7f8;
+            border: none;
+        }
+        a:hover{
+            transform: scale(1.05);
+            transition: all 0.3s linear;
+        }
+    }
+
 }
 
 .content-container{
     padding: 64px 100px;
-    table{
+    table{  
         width: 100%;
     }
     .content-wrapper{

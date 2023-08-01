@@ -9,6 +9,12 @@ body.campus-voice {
 
     .navbar{
         background-color: #e6b7f8;
+        .navbar-brand{ 
+            text-shadow: 1.5px 1.5px 1.5px #000;
+        }
+        .navbar-nav{
+            text-shadow: 1.5px 1.5px 1.5px #000;
+        }
     }
 
     textarea:focus, 
