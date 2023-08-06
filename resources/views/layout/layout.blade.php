@@ -21,9 +21,11 @@
     @endif
     @section('scripts')
         <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@grammarly/editor-sdk?clientId=client_CLCuSMgNA74LwPhgFyLn7W"></script>
         <!-- Replace with the appropriate URLs for your jQuery and DataTables version -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @show 
     @stack('scripts') 
 </body>

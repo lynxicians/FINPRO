@@ -21,11 +21,15 @@
             </table> 
             <div class="row pt-4">
                 <div class="col-11"></div>
-                <a class="btn button-post col-auto" href="#" role="button">Post</a>
+                <a class="btn button-post col-auto" href="{{ route('suggestion-post') }}" role="button">Post</a>
             </div>             
         </div>
     </div>
 </div>
+@if (Session::has('success'))
+<!-- Output the success message as a data attribute -->
+<div data-success="{{ Session::get('success') }}"></div>
+@endif
 @endsection
 
 @push('scripts')
@@ -45,5 +49,23 @@
         });
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if the success message is present in the DOM
+        const successMessage = document.querySelector('[data-success]');
+        if (successMessage) {
+            // Retrieve the success message from the data attribute
+            const message = successMessage.dataset.success;
 
+            // Show the SweetAlert2 success popup
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: message,
+                showConfirmButton: false,
+                timer: 3000 // Popup will close after 3 seconds
+            });
+        }
+    });
+</script>
 @endpush
