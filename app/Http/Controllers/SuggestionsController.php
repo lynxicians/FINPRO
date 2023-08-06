@@ -33,10 +33,8 @@ class SuggestionController extends Controller
         $suggestion->status = 1; // Assuming you have authentication set up
 
         $suggestion->save();
-        Session::flash('success', 'Suggestion created successfully.');
 
-        // Redirect to the desired route
-        return redirect()->route('suggestion.SuggestionManagementSystemp');
+        return redirect()->back()->with('success', 'Suggestion created successfully.');
     }
     
     public function SuggestionShow($id)
@@ -92,3 +90,4 @@ class SuggestionController extends Controller
     }
 
 }
+

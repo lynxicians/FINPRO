@@ -4,10 +4,12 @@
 <div class="home-wrapper">
   <div class="hero-background">
     <div class="search-wrapper">
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-        <button class="btn btn-outline-secondary button-search" type="button" id="button-addon1">Search</button>
-      </div>
+      <form action="{{ route("search-suggestion") }}" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="title" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <button class="btn btn-outline-secondary button-search" type="submit" id="button-addon1">Search</button>
+        </div>
+      </form>
     </div>
     <div class="hero-wrapper">
       <div class="desc">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repudiandae deleniti ipsam nobis necessitatibus facere! Voluptatem modi, qui iure fuga minus unde delectus at. Omnis culpa necessitatibus quod aspernatur molestiae quis! Ipsam vitae ullam iste aspernatur pariatur sequi aperiam! Quae, obcaecati eos, amet ipsum repellendus velit est consectetur, quaerat fuga error et esse! Culpa voluptate, labore velit quaerat cum commodi a, voluptatibus maxime nostrum facere, aut quae molestiae accusantium adipisci quisquam dolorem optio sed iste. Unde deleniti soluta, laboriosam expedita minima omnis voluptas! Exercitationem harum aperiam nesciunt dolorum dolores illo sint, quas dolorem atque! Dolorum nisi placeat hic amet officiis in!</div>
@@ -16,6 +18,9 @@
         <div class="comment"><i class='bx bx-comment-dots'></i></div>
         <div class="date">2023-07-21</div>
       </div>
+    </div>
+    <div class="button-suggestionDone text-center mt-4">
+      <a class="btn btn-lg shadow text-dark" href="#" role="button">What We have done?</a>
     </div>
   </div>
 
