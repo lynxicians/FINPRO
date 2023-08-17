@@ -5,7 +5,7 @@
    @include('partial.sidebar')
     <div class="userManagementWrapper w-100 h-100">
         <div class="border-bottom border-dark">
-            <h1>Welcome, Username</h1>
+            <h1>Welcome, {{ auth()->user()->name }}</h1>
         </div>
         <div class="card-body rounded shadow mt-4">
             <table class="table pt-3" id="suggestionTable">

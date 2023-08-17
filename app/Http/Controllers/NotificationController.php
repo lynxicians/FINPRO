@@ -77,7 +77,17 @@ class NotificationController extends Controller
 
     public function notification()
     {
-        $content = DB::table('notifications')->get();
+        if(auth()->user()->role_id == 1)
+        {
+            $content = DB::table('notifications')
+            ->where('addressed', 1)
+            ->get();
+        }
+        else{
+            $content = DB::table('notifications')
+            ->where('addressed', 2)
+            ->get();
+        }
 
         return view('suggestion.userNotification', [
             'content' => $content,

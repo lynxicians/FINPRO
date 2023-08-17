@@ -51,7 +51,6 @@
     }
     .content-wrapper{
         .low-desc{
-            cursor: pointer;
             background-color:rgb(199, 199, 199);
             text-align: justify;
             display: flex;
@@ -74,6 +73,7 @@
             .body{
                 height: 110px;
                 overflow: hidden;
+                cursor: pointer;
             }
             .bottom-wrappers{
                 display: flex;

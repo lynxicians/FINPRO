@@ -7,29 +7,33 @@ use App\Models\Suggestion;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function UserUpdate(Request $request, $id)
+    public function userUpdate(Request $request)
     {
-        $suggestion = Suggestion::find($id);
-        $user = auth()->user();
-    
-        $suggestion->name = $request->nickname;
+        $user = auth()->user(); // Use $user instead of $users
+        $user->name = $request->nickname; // Use $user instead of $suggestion
+
         if ($request->hasFile('images')) {
-            $file = $request->file('images');
-            $extension = $file->extension();
-            $filename = $user->name . time() . '.' . $extension;
-            
-            // Check if the file already exists and delete it
-            if (file_exists(public_path($suggestion->image))) {
-                unlink(public_path($suggestion->image));
-            }
-            
-            // Store the new file
-            $file->move(public_path('uploads/images'), $filename);
-            $suggestion->image = 'uploads/images/' . $filename;
+            $image = $request->file('images'); // Correct variable name
+            $imageContents = file_get_contents($image->getRealPath()); // Correct variable name
+            $base64Encoded = base64_encode($imageContents);
+
+            $user->picture = $base64Encoded;
         }
-        $suggestion->save(); // Corrected: use $suggestion instead of $blog
-    }    
+
+        $user->save(); // Save the updated user data
+
+        Session::flash('success', 'Profile updated successfully.');
+
+        if(auth()->user()->role_id == '2')
+        {
+            return redirect()->route('admin.index');
+        }
+        else {
+            return redirect()->route('suggestion.SuggestionManagementSystem');
+        }
+    } 
 }
