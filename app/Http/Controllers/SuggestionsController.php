@@ -3,91 +3,106 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Suggestion;
-use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\DataTables;
-use Illuminate\Support\Facades\Session;
+use App\Models\Suggestion;
+use App\Models\Notification;
+use App\Models\User;
 
-class SuggestionController extends Controller
+class SearchController extends Controller
 {
-    public function index()
+    // public function search(Request $request)
+    // {
+    //     // Assuming you have a sorted list of blog titles in the database.
+    //     $sortedBlogTitles = Suggestion::orderBy('title')->pluck('title')->toArray();
+
+    //     $targetTitle = $request->input('title');
+
+    //     // Perform binary search to find the index of the target blog title.
+    //     $index = $this->binarySearch($sortedBlogTitles, $targetTitle);
+
+    //     if ($index !== -1) {
+    //         // Blog found! You can now retrieve the blog record from the database.
+    //         $foundBlog = Suggestion::where('title', $sortedBlogTitles[$index])->first();
+
+    //         return response()->json([
+    //             'status' => 'success',
+    //             'data' => $foundBlog,
+    //         ]);
+    //     } else {
+    //         return response()->json([
+    //             'status' => 'error',
+    //             'message' => 'Blog not found.',
+    //         ], 404);
+    //     }
+    // }
+    public function search(Request $request)
     {
-        return view('suggestion.suggestion');
+        // Assuming you have a sorted list of blog titles in the database.
+        $sortedBlogTitles = Suggestion::orderBy('title')->pluck('title')->toArray();
+
+        $targetTitle = $request->input('title');
+        $keyword = $request->input('title'); // Using 'title' input for the keyword as well
+
+        // Perform binary search to find the index of the target blog title.
+        $index = $this->binarySearchCaseInsensitive($sortedBlogTitles, $targetTitle);
+
+        $matchingSuggestions = [];
+
+        if ($index !== -1) {
+            // Blog found! You can now retrieve the blog record from the database.
+            $foundBlog = Suggestion::where('title', $sortedBlogTitles[$index])->first();
+
+            // Search for suggestions containing the keyword
+            if ($keyword) {
+                $matchingSuggestions = Suggestion::where('title', 'like', "%$keyword%")->get();
+            }
+
+            // Remove the foundBlog from matchingSuggestions
+            $matchingSuggestions = $matchingSuggestions->reject(function ($suggestion) use ($foundBlog) {
+                return strtolower($suggestion->title) === strtolower($foundBlog->title);
+            });
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'foundBlog' => $foundBlog,
+                    'matchingSuggestions' => $matchingSuggestions,
+                ],
+            ]);
+        } else {
+            // If no exact match found, search for similar titles
+            $matchingSuggestions = Suggestion::where('title', 'like', "%$keyword%")->get();
+
+            if ($matchingSuggestions->isEmpty()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Blog not found.',
+                ], 404);
+            }
+            return view('homepage.index', [
+                'matchingSuggestions' => $matchingSuggestions,
+            ]);
+        }
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'content' => 'required|string',
-        ]);
+private function binarySearchCaseInsensitive(array $arr, $target)
+{
+    $low = 0;
+    $high = count($arr) - 1;
 
-        $suggestion = new Suggestion();
-        $suggestion->title = $request->input('title');
-        $suggestion->description = $request->input('description');
-        $suggestion->content = $request->input('content');
-        $suggestion->user_id = auth()->user()->id; // Assuming you have authentication set up
-        $suggestion->status = 1; // Assuming you have authentication set up
+    while ($low <= $high) {
+        $mid = (int)(($low + $high) / 2);
 
-        $suggestion->save();
-
-        return redirect()->back()->with('success', 'Suggestion created successfully.');
-    }
-    
-    public function SuggestionShow($id)
-    {
-        $content = DB::table('suggestions')
-        ->select('id', 'title', 'description', 'content', 'created_at')
-        ->where('id', '=', $id)
-        ->get();
-        
-        $comments = Comment::where('suggestion_id', $id)->get();
-        
-        return view('suggestion.show', [
-            'content' => $content,
-            'comments' => $comments,
-        ]);
+        if (strcasecmp($arr[$mid], $target) === 0) {
+            return $mid;
+        } elseif (strcasecmp($arr[$mid], $target) < 0) {
+            $low = $mid + 1;
+        } else {
+            $high = $mid - 1;
+        }
     }
 
-    public function getUsersData(Request $request)
-    {
-        $users = Auth::user();
-        $sugg = Suggestion::where('user_id', $users->id)->orderBy('created_at', 'desc');
-
-        return DataTables::of($sugg)
-            ->editColumn('action', function ($sugg) {
-                return
-                '<form action="' . route('suggestion.delete', ['id' => $sugg->id]) . '" method="POST" style="display:inline">'
-                . csrf_field()
-                . method_field('DELETE')
-                . '<button type="submit" class="btn btn-danger custom-edit">Delete</button>'
-                . '</form>'
-                . '<a class="btn btn-info custom-edit" style="color: black;" href="' . route('suggestion.show', ['id' => $sugg->id]) . '">View</a>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-    }
- 
-    public function SuggestionManagementSystem()
-    {
-        return view('suggestion.userManagement');
-    }
-
-    public function suggestionEdit()
-    {
-        return view('suggestion.show');
-    }
-
-    public function suggestionDelete($id)
-    {
-        $suggestion = Suggestion::find($id); 
-        $suggestion->delete(); 
-
-        return redirect()->route('suggestion.SuggestionManagementSystem');
-    }
-
+    return -1; // Target not found.
 }
 
+}

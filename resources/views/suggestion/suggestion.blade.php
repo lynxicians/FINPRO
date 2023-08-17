@@ -8,15 +8,19 @@
             <hr>
         </div>
         <div class="col-lg-8">
-            <form method="post" action="{{ route('suggestion-post') }}">
+            <form method="post" action="{{ route('suggestion-post') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                  <label for="title" class="form-label text-uppercase">Title</label>
-                  <input type="text" class="form-control" id="title" name="title">
+                    <label for="title" class="form-label text-uppercase">Title</label>
+                    <input type="text" class="form-control" id="title" name="title">
                 </div>
                 <div class="mb-3">
-                  <label for="description" class="form-label text-uppercase">Description</label>
-                  <input type="text" class="form-control" id="description" name="description">
+                    <label for="description" class="form-label text-uppercase">Description</label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
+                <div class="mb-3">
+                    <label for="front_image">Image:</label><br>
+                    <input type="file" id="front_image" name="front_image" accept="image/*" required><br>
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label text-uppercase">Content</label>
@@ -24,9 +28,8 @@
                         <textarea class="form-control" id="editor" rows="3" name="content"></textarea>
                     </grammarly-editor-plugin>
                 </div>
-                <button type="button" id="suggSubmit" class="btn btn-dark fw-bold">Posting</button>
-                <button type="submit" id="suggSubmitthepost" class="btn btn-dark fw-bold" hidden>Posting</button>
-            </form>
+                <button type="submit" class="btn btn-dark fw-bold">Posting</button>
+            </form>            
         </div>
     </div>
 </div>

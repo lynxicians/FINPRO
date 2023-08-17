@@ -12,9 +12,17 @@
           <li class="nav-item">
             <a class="nav-link text-white" href="{{ route('about') }}">About</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('suggestion.SuggestionManagementSystem') }}">Suggestion</a>
-          </li>
+          @auth
+            @if(auth()->user()->role_id == 1)
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('suggestion.SuggestionManagementSystem') }}">Suggestion</a>
+              </li>
+              @else
+              <li class="nav-item">
+                <a class="nav-link text-white" href="{{ route('admin.index') }}">Admin Management</a>
+              </li>
+            @endif
+          @endauth
         </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Suggestion;
+use App\Models\Notification;
 use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -20,33 +21,55 @@ class SuggestionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string',
+            'title' => 'required|string|unique:suggestions',
             'description' => 'required|string',
             'content' => 'required|string',
+            'front_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Add validation rules for the image
         ]);
 
         $suggestion = new Suggestion();
         $suggestion->title = $request->input('title');
         $suggestion->description = $request->input('description');
         $suggestion->content = $request->input('content');
-        $suggestion->user_id = auth()->user()->id; // Assuming you have authentication set up
-        $suggestion->status = 1; // Assuming you have authentication set up
+        $suggestion->user_id = auth()->user()->id;
+        $suggestion->status = 1;
+
+        $image = $request->file('front_image');
+
+        if ($image) {
+            $imageContents = file_get_contents($image->getRealPath());
+            $base64Encoded = base64_encode($imageContents);
+
+            $suggestion->picture = $base64Encoded;
+            Session::flash('success', 'Suggestion created successfully.');
+        }
 
         $suggestion->save();
-        Session::flash('success', 'Suggestion created successfully.');
 
-        // Redirect to the desired route
-        return redirect()->route('suggestion.SuggestionManagementSystemp');
+        $notif = new Notification();
+        $notif->title = 'new Suggestion! || ' . $request->input('title');
+        $notif->body = 'User had been added new Suggestion';
+        $notif->suggestion_id = $suggestion->id;
+        $notif->user_id = auth()->user()->id;
+        $notif->addressed = 2;
+        $notif->save();
+        return redirect()->route('suggestion.SuggestionManagementSystem');
     }
+
     
     public function SuggestionShow($id)
     {
         $content = DB::table('suggestions')
-        ->select('id', 'title', 'description', 'content', 'created_at')
+        ->select('id', 'title', 'description', 'content', 'created_at', 'picture')
         ->where('id', '=', $id)
         ->get();
         
-        $comments = Comment::where('suggestion_id', $id)->get();
+        $comments = Comment::where('suggestion_id', $id)
+        ->orderByRaw('user_id = 4 desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+
         
         return view('suggestion.show', [
             'content' => $content,
