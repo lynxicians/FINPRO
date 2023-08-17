@@ -6,9 +6,22 @@
 @section('content')
 <div class="show-cover">
     <div class="voice-container">
+        <div class="d-flex justify-content-end mb-2">
+            @if($status[0]->status == 2)
+                <div class=" status done">
+                    SOLVED
+                </div>
+            @elseif($status[0]->status == 3)
+            <div class="status danger">
+                CLOSED
+            </div>
+            @else
+            @endif
+        </div>
         <div class="c-container">
             @foreach ($content as $item )
-                <div class="head">{{ $item->title }}</div>
+                <div class="head">{{ $item->title }}
+                </div>
                 <div class="body">{!! $item->content !!}</div>
             @endforeach
         </div>
@@ -66,7 +79,7 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
-                </form>
+                </form> 
             </div>
         </div>
 </div>

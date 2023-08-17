@@ -69,11 +69,15 @@ class SuggestionController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
+        $status = DB::table('suggestions')
+        ->select('status')
+        ->where('id', '=', $id)
+        ->get();
 
-        
         return view('suggestion.show', [
             'content' => $content,
             'comments' => $comments,
+            'status' => $status,
         ]);
     }
 

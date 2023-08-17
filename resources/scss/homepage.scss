@@ -88,3 +88,12 @@
         }
     }
 }
+
+.about-wrapper{
+    height: calc(100vh - 128px);
+    display: flex;
+    align-items: center;
+    .hero-wrapper{
+        padding: 24px;
+    }
+}

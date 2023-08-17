@@ -8,6 +8,16 @@
 body.campus-voice{
     .show-cover{
         padding: 64px  0;
+        .status{
+            padding: 12px;
+            border-radius: 6px;
+            &.done{
+                background-color: rgb(12, 233, 34);
+            }
+            &.danger{
+                background-color: rgb(233, 12, 12);
+            }
+        }
         .c-container{
             background-color: #e6b7f8;
             padding: 24px;

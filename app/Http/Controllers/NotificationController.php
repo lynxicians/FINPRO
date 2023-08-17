@@ -53,7 +53,7 @@ class NotificationController extends Controller
         }
 
         // Update the suggestion status to "solved"
-        $suggestion->status = 2;
+        $suggestion->status = 3;
         $suggestion->save();
 
         // Notify the user about the status change
